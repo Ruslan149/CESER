@@ -170,19 +170,19 @@ if(typeof CreditsExtension === "object")
 
 ## **Example**
 ```
-CreditsExtension.authorization().then(r => {
-
-if(r.result === undefined){
-	alert(r.message);
-return;
-}
-if(r.result)
-{
-		alert(“user is authorized”)
-}else{
-	alert(“user is not authorized”)
-}
-})
+CreditsExtension.authorization().then(
+	r => {
+		if(r)
+		{
+			alert(“user is authorized”)
+		}
+		else
+		{
+			alert(“user is not authorized”)
+		}
+	}, 
+	error => alert(error);
+);
 ```
 ## CreditsExtension.balanceGet()
 
@@ -219,87 +219,13 @@ CreditsExtension.balanceGet().then(r =>  {});
 
 ## Example
 ```
-CreditsExtension.balanceGet().then(r =>  {
-if(r.result === undefined){
-	alert(r.message);
-return;
-}
-// code
-})
-```
-
-## ok.History(Obj,callBack).It`s need CreditsWork.js file.
-
-•	Returns transaction history by a public key
-
-•	object Obj has a form of: 
-```
-{
-	page: page number,
-	size: number of transactions per on page,
-	key: public key whose transactions will be returned. If the key is not specified, transactions of an authorized user will be returned. 
-
-}
-```
-
-function ```callBack(response)```
-
-The objects will be passed to ```response``` as: 
-```
-{
-	message,
-        result
-}
-```
-•	If ```result``` is ```undefined```,  there will be a description of an error in message
-
-•	```result``` will contain an array from object type 
-```
-{
-	id -transaction ID,
-	amount – amount transfer in CS,
-	fee – transaction fee (commission) in CS,
-	source – transaction sender’s public key 
-	target - transaction receiver's public key 
-	smartContract – smart contract information in a transaction
-	smartInfo – smart contract condition information
-}
-```
-## Call example:
-
-* ok.History(YourKey,page,100,function(r){});
-
-
-## Example
-```
-var netIp;
-var netAport;
-CreditsExtension.curNet().then(r =>  
-{
-    var xhr = new XMLHttpRequest();
-xhr.open('GET', 'http://wallet.credits.com/api/"CreditsNetwork or testnet-r4_2 or DevsDappsTestnet"/api/NetWork');
-    xhr.onload = function (e) {
-        if (xhr.status != 200) {
-            alert('Network Request Error!');
-        } else {
-            let objnet = JSON.parse(xhr.responseText);
-            netIp = objnet[0].ip;
-            netAport = objnet[0].aport;
-            var ok = new CreditsWork(netIp,netAport);
-            let page = '1';
-            ok.History(YourKey,page,100,function(r)
-            {
-                if(r === undefined)
-                {
-                    alert(r.message);
-                    return;
-                }
-                 // code if success
-            });
-        }
-    }       
-    xhr.send(null);
-});
+CreditsExtension.balanceGet().then(
+	r =>  
+	{
+	// code
+	},
+	error => alert(error);
+);
 ```
 
 ## CreditsExtension.compiledSmartContractCode(Code)
@@ -327,13 +253,11 @@ Compiles a smart contract and reports compilation errors if those are found.
 
 ## Example
 ```
-CreditsExtension.compiledSmartContractCode(code).then(r => {
-if(r.result === undefined){
-	alert(r.message);
-return;
-}
-console.log(r.result);
-});
+CreditsExtension.compiledSmartContractCode(code).then(
+	r => {
+	console.log(r);
+	}, error => alert(error);
+);
 ```
 ## CreditsExtension.sendTransaction(Transaction)
 
@@ -360,15 +284,12 @@ To send a transaction for a CS transfer, the Transaction object must have the fo
 ## Example
 ```
 CreditsExtension.sendTransaction({
-Target: Public key,
-Amount: “1.2”
-}).then(r => {
-if(r.result === undefined){
-	alert(r.message);
-return;
-}
-console.log(r.result);
-});
+	target: Public key,
+	amount: “1.2”
+	}).then(r => {
+	console.log(r);
+	}, error => alert(error);
+);
 ```
 
 To complete the smart contract method, the Transaction object must have the following form:
@@ -400,13 +321,11 @@ smartContract:
 ],
 method: “Test”
 }
-}).then(r => {
-if(r.result === undefined){
-	alert(r.message);
-return;
-}
-console.log(r.result);
-});
+}).then(
+	r => {
+	console.log(r);
+	}, error => alert(error);
+);
 ```
 
 **In order to deploy smart contract, the Transaction object must have the following form:**
@@ -427,12 +346,9 @@ CreditsExtension.sendTransaction({
             code: “Code”
 }
 }).then(r => {
-if(r.result === undefined){
-	alert(r.message);
-return;
-}
-console.log(r.result);
-});
+	console.log(r);
+	}, error => alert(error);
+);
 ```
 
 
